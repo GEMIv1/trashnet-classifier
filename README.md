@@ -197,14 +197,14 @@ pip install -r requirements.txt
 ### Required Packages
 
 ```
-tensorflow>=2.10.0
-scikit-learn>=1.0.0
-numpy>=1.21.0
-pandas>=1.3.0
-Pillow>=9.0.0
-streamlit>=1.20.0
-matplotlib>=3.5.0
-seaborn>=0.11.0
+tensorflow==2.17.0
+tf-keras==2.17.0
+streamlit
+streamlit-webrtc
+opencv-python-headless
+pillow
+scikit-learn
+joblib
 ```
 
 ## Usage
@@ -287,36 +287,6 @@ print(classification_report(y_val, svm_predictions, target_names=classes))
 # Evaluate KNN
 knn_predictions = knn.predict(val_features)
 print(classification_report(y_val, knn_predictions, target_names=classes))
-```
-
-### Training Configuration
-```python
-# Image preprocessing
-IMG_SIZE = (300, 300)  # EfficientNetB0 input size
-BATCH_SIZE = 32
-NORMALIZATION = [0, 1]  # Min-Max scaling
-
-# Data split
-TRAIN_SPLIT = 0.80  # 1,492 images
-TEST_SPLIT = 0.20   # 373 images
-
-# Augmentation parameters
-TARGET_PER_CLASS = 600  # Balanced training set
-ROTATION_RANGE = 15
-ZOOM_RANGE = [0.9, 1.1]
-BRIGHTNESS_RANGE = [0.8, 1.2]
-
-# SVM hyperparameters (optimized)
-KERNEL = 'rbf'
-C = 7.7
-GAMMA = 'scale'
-CLASS_WEIGHT = 'balanced'
-
-# KNN hyperparameters
-N_NEIGHBORS = 7
-WEIGHTS = 'distance'
-METRIC = 'minkowski'
-P = 2  # Euclidean distance
 ```
 
 ## Results
@@ -468,10 +438,10 @@ The Streamlit application provides an intuitive, multi-modal interface for waste
 ### Screenshots
 
 #### Main Interface
-![Main Interface](<img width="1913" height="907" alt="TN-1" src="https://github.com/user-attachments/assets/ef56ad0a-5dc8-4c3a-97a2-878af0ca670d" />)
+![Main Interface]<img width="1913" height="907" alt="TN-1" src="https://github.com/user-attachments/assets/1f48d588-96a0-4038-a7a7-10925c592577"/>
 
 #### Classification Results
-![Prediction Results]<img width="1917" height="900" alt="TN-2" src="https://github.com/user-attachments/assets/1ce713a7-98e7-45e6-a678-70e51c19c88d" />)
+![Prediction Results]<img width="1917" height="900" alt="TN-2" src="https://github.com/user-attachments/assets/1ce713a7-98e7-45e6-a678-70e51c19c88d"/>)
 ### Using the App
 
 #### Option 1: Upload Image
