@@ -60,7 +60,7 @@ The dataset consists of 1,865 valid images (after removing 100 corrupted files) 
 
 ### System Workflow
 
-<img width="1447" height="432" alt="Arch" src="https://github.com/user-attachments/assets/d1665b6c-dbb3-4f94-aae3-01c4afeff151" />
+![ML project pipeline (1)](https://github.com/user-attachments/assets/a8458061-e6d4-4d13-84ce-2dd45937e049)
 
 The complete pipeline follows these stages:
 
