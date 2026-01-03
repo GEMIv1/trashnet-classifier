@@ -15,12 +15,8 @@ A hybrid deep learning and machine learning waste classification system achievin
 - [Project Structure](#project-structure)
 - [Model Report](#model-report)
 - [Technologies Used](#technologies-used)
-- [Future Improvements](#future-improvements)
-- [Contributing](#contributing)
-- [License](#license)
-- [Acknowledgments](#acknowledgments)
 
-## 🎯 Overview
+## Overview
 
 TrashNet Classifier is a production-ready hybrid AI system that combines deep learning feature extraction with classical machine learning for automated waste categorization. The system uses **EfficientNetB0** (pre-trained on ImageNet) as a feature extractor, followed by an optimized **SVM classifier** that achieves **92.49% accuracy** on waste classification.
 
@@ -31,7 +27,7 @@ This innovative approach offers:
 - **Production Ready**: Includes confidence thresholding and multiple deployment options
 - **Interactive Interface**: Streamlit app with image upload, live camera, and camera capture
 
-## ✨ Features
+## Features
 
 - **Hybrid Architecture**: Combines EfficientNetB0 (deep learning) with SVM (classical ML)
 - **High Accuracy**: Achieves 92.49% classification accuracy on test set
@@ -47,7 +43,7 @@ This innovative approach offers:
 - **Comprehensive Documentation**: Full ML report with performance analysis
 - **Production Ready**: Optimized for deployment with <200ms inference time
 
-## 📊 Dataset
+## Dataset
 
 The project uses the **TrashNet dataset**, which contains images of waste sorted into the following categories:
 
@@ -60,21 +56,13 @@ The project uses the **TrashNet dataset**, which contains images of waste sorted
 
 The dataset consists of 1,865 valid images (after removing 100 corrupted files) resized to 224×224 pixels for optimal EfficientNetB0 processing.
 
-**Dataset Statistics:**
-- Plastic: 363 images (19.5%)
-- Paper: 449 images (24.1%)
-- Glass: 385 images (20.6%)
-- Metal: 315 images (16.9%)
-- Cardboard: 247 images (13.2%)
-- Trash: 106 images (5.7%)
-
 **Dataset Source**: [TrashNet on Kaggle](https://www.kaggle.com/datasets/feyzazkefe/trashnet)
 
-## 🧠 Methodology
+## Methodology
 
 ### System Workflow
 
-![Workflow Diagram](images/workflow_diagram.png)
+![Workflow Diagram](<img width="1447" height="432" alt="Arch" src="https://github.com/user-attachments/assets/b8d8eab2-29c8-4f50-87c1-23b20af3856e" />)
 
 The complete pipeline follows these stages:
 
@@ -118,7 +106,7 @@ from tensorflow.keras.layers import GlobalAveragePooling2D
 base_model = EfficientNetB0(
     weights='imagenet', 
     include_top=False, 
-    input_shape=(224, 224, 3)
+    input_shape=(300, 300, 3)
 )
 base_model.trainable = False  # Freeze the base model
 
@@ -131,7 +119,7 @@ model = Sequential([
 
 **Why EfficientNetB0?**
 - State-of-the-art accuracy with minimal computational cost
-- Pretrained on ImageNet provides robust visual features (1,280-dimensional feature vectors)
+- Pretrained on ImageNet provides robust visual features (1,300-dimensional feature vectors)
 - Compact model suitable for deployment
 - Faster inference compared to larger models
 
@@ -143,12 +131,17 @@ Custom augmentation pipeline designed specifically for waste classification to a
 
 ```python
 ImageDataGenerator(
-    rotation_range=15,              # Random rotation (±15 degrees)
-    horizontal_flip=True,           # Mirror images (natural for trash)
-    zoom_range=[0.9, 1.1],          # Zoom variations (0.9-1.1x)
-    brightness_range=[0.8, 1.2],    # Lighting conditions
-    fill_mode='nearest'             # Fill strategy for empty pixels
-)
+            rotation_range=20,           # Moderate rotation (trash can be at any angle)
+            width_shift_range=0.15,      # Slight horizontal shifts
+            height_shift_range=0.15,     # Slight vertical shifts
+            zoom_range=0.2,              # Zoom to simulate different distances
+            shear_range=0.15,            # Slight shearing
+            horizontal_flip=True,        # Trash items can appear mirrored
+            vertical_flip=False,         # Don't flip vertically (unnatural)
+            brightness_range=[0.8, 1.3], # Lighting variations
+            fill_mode='nearest',         # Fill missing pixels
+            channel_shift_range=0.1      # Color variations
+        )
 ```
 
 **Augmentation Results:**
@@ -163,7 +156,7 @@ Two classifiers were trained and comprehensively compared:
 
 1. **Support Vector Machine (SVM)** ✅ **Selected for Production**
    - Kernel: RBF (Radial Basis Function)
-   - C parameter: 7.7 (regularization strength)
+   - C parameter: 10 (regularization strength)
    - Gamma: scale (automatic)
    - Class weight: balanced (handles class imbalance)
    - Probability estimates: enabled
@@ -178,7 +171,7 @@ Two classifiers were trained and comprehensively compared:
    - **Advantages:** Fast training, simple algorithm, perfect recall on cardboard
    - **Limitations:** Lower overall accuracy, struggles with glass and trash categories
 
-## 🛠️ Installation
+## Installation
 
 ### Prerequisites
 - Python 3.8 or higher
@@ -216,7 +209,7 @@ matplotlib>=3.5.0
 seaborn>=0.11.0
 ```
 
-## 🚀 Usage
+## Usage
 
 ### Running the Streamlit App
 
@@ -233,60 +226,8 @@ The app will open in your default browser at `http://localhost:8501`
 3. SVM classifier predicts the waste category
 4. View the predicted category and confidence score
 
-### Making Predictions Programmatically
 
-```python
-import numpy as np
-from tensorflow.keras.preprocessing import image as keras_image
-from tensorflow.keras.applications import EfficientNetB0
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import GlobalAveragePooling2D
-import joblib
-
-# Load the feature extractor
-base_model = EfficientNetB0(weights='imagenet', include_top=False, 
-                            input_shape=(224, 224, 3))
-base_model.trainable = False
-
-feature_extractor = Sequential([
-    base_model,
-    GlobalAveragePooling2D()
-])
-
-# Load the trained SVM classifier
-svm_classifier = joblib.load('saved_models/trashnet_models/svm_classifier.pkl')
-
-# Load and preprocess image
-img = keras_image.load_img('path/to/trash/image.jpg', target_size=(224, 224))
-img_array = keras_image.img_to_array(img)
-img_array = img_array / 255.0  # Normalize
-img_array = np.expand_dims(img_array, axis=0)
-
-# Extract features
-features = feature_extractor.predict(img_array)
-
-# Classify
-prediction = svm_classifier.predict(features)
-probabilities = svm_classifier.predict_proba(features)[0]
-
-# Apply confidence threshold
-max_confidence = np.max(probabilities)
-classes = ['cardboard', 'glass', 'metal', 'paper', 'plastic', 'trash']
-
-if max_confidence < 0.5:
-    predicted_class = "Unknown Object"
-    confidence = max_confidence * 100
-else:
-    predicted_class = classes[prediction[0]]
-    confidence = max_confidence * 100
-
-print(f"Predicted: {predicted_class} ({confidence:.2f}% confidence)")
-print(f"\nAll class probabilities:")
-for cls, prob in zip(classes, probabilities):
-    print(f"  {cls}: {prob*100:.2f}%")
-```
-
-## 🔬 Training Pipeline
+## Training Pipeline
 
 The complete training pipeline is available in the Kaggle notebook: [ML Pipeline](https://www.kaggle.com/code/ahmedkamel111/ml-pipeline)
 
@@ -329,11 +270,11 @@ from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 
 # Train SVM
-svm = SVC(kernel='rbf', C=1.0, gamma='scale', probability=True, random_state=42)
+svm_classifier = SVC(kernel='rbf', C=10.0, gamma='scale', probability=True, class_weight='balanced', random_state=42)
 svm.fit(train_features, y_train)
 
 # Train KNN for comparison
-knn = KNeighborsClassifier(n_neighbors=5, weights='distance')
+knn_classifier = KNeighborsClassifier(n_neighbors=7, weights='distance', algorithm='auto', metric='minkowski', p=2, n_jobs=-1)
 knn.fit(train_features, y_train)
 ```
 
@@ -353,7 +294,7 @@ print(classification_report(y_val, knn_predictions, target_names=classes))
 ### Training Configuration
 ```python
 # Image preprocessing
-IMG_SIZE = (224, 224)  # EfficientNetB0 input size
+IMG_SIZE = (300, 300)  # EfficientNetB0 input size
 BATCH_SIZE = 32
 NORMALIZATION = [0, 1]  # Min-Max scaling
 
@@ -380,7 +321,7 @@ METRIC = 'minkowski'
 P = 2  # Euclidean distance
 ```
 
-## 📈 Results
+## Results
 
 ### Overall Model Performance
 
