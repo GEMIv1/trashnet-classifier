@@ -2,7 +2,7 @@
 
 A hybrid deep learning and machine learning waste classification system achieving **92.49% accuracy**. Combines EfficientNetB0 feature extraction with SVM classification to identify and categorize 6 types of waste materials. Includes an interactive Streamlit web app with camera support for real-time classification.
 
-## 📋 Table of Contents
+## Table of Contents
 - [Overview](#overview)
 - [Features](#features)
 - [Dataset](#dataset)
@@ -12,8 +12,6 @@ A hybrid deep learning and machine learning waste classification system achievin
 - [Training Pipeline](#training-pipeline)
 - [Results](#results)
 - [Streamlit App](#streamlit-app)
-- [Project Structure](#project-structure)
-- [Model Report](#model-report)
 - [Technologies Used](#technologies-used)
 
 ## Overview
@@ -439,24 +437,24 @@ P = 2  # Euclidean distance
 ✓ Fast inference (<200ms per image)  
 ✓ Production-ready with confidence thresholding  
 
-## 💻 Streamlit App
+## Streamlit App
 
 The Streamlit application provides an intuitive, multi-modal interface for waste classification using the trained SVM model.
 
 ### App Features
 
-#### 📸 Multiple Input Methods
+#### Multiple Input Methods
 - **Upload Images**: Drag-and-drop or browse for image files (JPG, PNG, JPEG)
 - **Live Camera**: Real-time classification using your device's camera
 - **Camera Screenshots**: Capture and classify images directly from camera
 
-#### 🤖 AI-Powered Classification
-- **Automatic Processing**: Features extracted via EfficientNetB0 (1,280-dimensional vectors)
+#### AI-Powered Classification
+- **Automatic Processing**: Features extracted via EfficientNetB0 (1,300-dimensional vectors)
 - **SVM Classification**: Real-time predictions with 92.49% accuracy
 - **Confidence Scores**: Visual representation of prediction probabilities for all 6 categories
 - **Confidence Threshold**: 50% threshold with "Unknown Object" fallback for ambiguous predictions
 
-#### 📊 Interactive Results
+#### Interactive Results
 - **Image Preview**: View uploaded/captured images before classification
 - **Prediction Breakdown**: See confidence scores for all waste categories
 - **Category Information**: Descriptions and recycling guidelines for each class
@@ -470,35 +468,10 @@ The Streamlit application provides an intuitive, multi-modal interface for waste
 ### Screenshots
 
 #### Main Interface
-![Main Interface](images/streamlit_main.png)
-*Upload interface with multiple input options: file upload, live camera, and camera capture*
-
-#### File Upload Mode
-![File Upload](images/streamlit_upload.png)
-*Drag-and-drop interface for image classification*
-
-#### Live Camera Mode
-![Live Camera](images/streamlit_camera.png)
-*Real-time camera feed with instant classification*
+![Main Interface](<img width="1913" height="907" alt="TN-1" src="https://github.com/user-attachments/assets/ef56ad0a-5dc8-4c3a-97a2-878af0ca670d" />)
 
 #### Classification Results
-![Prediction Results](images/streamlit_prediction.png)
-*Detailed prediction with confidence scores for all categories*
-
-#### Confidence Breakdown
-![Confidence Scores](images/streamlit_confidence.png)
-*Visual bar chart showing prediction probabilities*
-
-#### Example Classifications
-![Plastic Example](images/streamlit_plastic.png)
-*Classifying plastic waste (97% confidence)*
-
-![Cardboard Example](images/streamlit_cardboard.png)
-*Classifying cardboard (96% precision)*
-
-![Metal Example](images/streamlit_metal.png)
-*Classifying metal waste*
-
+![Prediction Results]<img width="1917" height="900" alt="TN-2" src="https://github.com/user-attachments/assets/1ce713a7-98e7-45e6-a678-70e51c19c88d" />)
 ### Using the App
 
 #### Option 1: Upload Image
@@ -520,59 +493,6 @@ The Streamlit application provides an intuitive, multi-modal interface for waste
 3. Review captured image
 4. Classify and view results
 
-### Technical Implementation
-
-```python
-# Streamlit app structure
-import streamlit as st
-from tensorflow.keras.models import load_model
-import joblib
-
-# Load models
-feature_extractor = load_model('saved_models/feature_extractor_model/')
-svm_classifier = joblib.load('saved_models/svm_classifier.pkl')
-
-# Classification function
-def classify_image(image):
-    # Preprocess
-    img = cv2.resize(image, (224, 224))
-    img = img / 255.0
-    
-    # Extract features
-    features = feature_extractor.predict(np.expand_dims(img, axis=0))
-    
-    # Classify
-    prediction = svm_classifier.predict(features)
-    probabilities = svm_classifier.predict_proba(features)[0]
-    
-    # Apply confidence threshold
-    max_confidence = np.max(probabilities)
-    if max_confidence < 0.5:
-        return "Unknown Object", probabilities
-    
-    return classes[prediction[0]], probabilities
-```
-
-## 📊 Model Report
-
-A comprehensive ML report is included in this repository analyzing the complete training process, model comparison, and performance evaluation.
-
-**Report Highlights:**
-- Detailed SVM vs KNN comparison across all metrics
-- Per-category performance analysis with confusion patterns
-- Data augmentation impact assessment
-- Production deployment recommendations
-- Confidence thresholding strategies
-
-**Key Sections:**
-1. Dataset Overview & Preprocessing
-2. Feature Extraction Pipeline (EfficientNetB0)
-3. Model Configurations & Hyperparameters
-4. Comprehensive Performance Comparison
-5. Category-Specific Analysis
-6. Training Efficiency Metrics
-7. Production Deployment Guidelines
-   
 ## Technologies Used
 
 ### Deep Learning
@@ -605,7 +525,3 @@ A comprehensive ML report is included in this repository analyzing the complete 
 Kaggle Notebook: [ML Pipeline](https://www.kaggle.com/code/ahmedkamel111/ml-pipeline)
 
 ---
-
-⭐ If you find this project useful, please consider giving it a star!
-
-**Built with ❤️ for a cleaner, more sustainable future through AI-powered waste management**
