@@ -60,7 +60,7 @@ The dataset consists of 1,865 valid images (after removing 100 corrupted files) 
 
 ### System Workflow
 
-![Workflow Diagram](<img width="1447" height="432" alt="Arch" src="https://github.com/user-attachments/assets/b8d8eab2-29c8-4f50-87c1-23b20af3856e" />)
+<img width="1447" height="432" alt="Arch" src="https://github.com/user-attachments/assets/d1665b6c-dbb3-4f94-aae3-01c4afeff151" />
 
 The complete pipeline follows these stages:
 
@@ -442,6 +442,7 @@ The Streamlit application provides an intuitive, multi-modal interface for waste
 
 #### Classification Results
 <img width="1917" height="900" alt="TN-2" src="https://github.com/user-attachments/assets/1ce713a7-98e7-45e6-a678-70e51c19c88d"/>
+
 ### Using the App
 
 #### Option 1: Upload Image
