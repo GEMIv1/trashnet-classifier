@@ -1,3 +1,6 @@
+Application Link: [ML Application](https://trashnet-classifier-desjhwxrzwf9eueucgqwtp.streamlit.app/)
+
+
 # TrashNet Classifier 🗑️♻️
 
 A hybrid deep learning and machine learning waste classification system achieving **92.49% accuracy**. Combines EfficientNetB0 feature extraction with SVM classification to identify and categorize 6 types of waste materials. Includes an interactive Streamlit web app with camera support for real-time classification.
@@ -494,5 +497,4 @@ The Streamlit application provides an intuitive, multi-modal interface for waste
 - **joblib** - Model serialization
 
 Kaggle Notebook: [ML Pipeline](https://www.kaggle.com/code/ahmedkamel111/ml-pipeline)
-
 ---
