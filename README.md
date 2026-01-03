@@ -1,6 +1,6 @@
 # [TrashNet Classifier](https://trashnet-classifier-desjhwxrzwf9eueucgqwtp.streamlit.app/) 🗑️♻️
 
-A hybrid deep learning and machine learning waste classification system achieving **92.49% accuracy**. Combines EfficientNetB0 feature extraction with SVM classification to identify and categorize 6 types of waste materials. Includes an interactive Streamlit web app with camera support for real-time classification.
+A hybrid deep learning and machine learning waste classification system achieving **92.49% accuracy**. Combines EfficientNetB3 feature extraction with SVM classification to identify and categorize 6 types of waste materials. Includes an interactive Streamlit web app with camera support for real-time classification.
 
 ## Table of Contents
 - [Overview](#overview)
@@ -16,7 +16,7 @@ A hybrid deep learning and machine learning waste classification system achievin
 
 ## Overview
 
-TrashNet Classifier is a production-ready hybrid AI system that combines deep learning feature extraction with classical machine learning for automated waste categorization. The system uses **EfficientNetB0** (pre-trained on ImageNet) as a feature extractor, followed by an optimized **SVM classifier** that achieves **92.49% accuracy** on waste classification.
+TrashNet Classifier is a production-ready hybrid AI system that combines deep learning feature extraction with classical machine learning for automated waste categorization. The system uses **EfficientNetB3** (pre-trained on ImageNet) as a feature extractor, followed by an optimized **SVM classifier** that achieves **92.49% accuracy** on waste classification.
 
 This innovative approach offers:
 - **High Accuracy**: 92.49% classification accuracy with balanced performance
@@ -27,7 +27,7 @@ This innovative approach offers:
 
 ## Features
 
-- **Hybrid Architecture**: Combines EfficientNetB0 (deep learning) with SVM (classical ML)
+- **Hybrid Architecture**: Combines EfficientNetB3 (deep learning) with SVM (classical ML)
 - **High Accuracy**: Achieves 92.49% classification accuracy on test set
 - **Advanced Data Augmentation**: Custom pipeline with 2.4x dataset expansion
 - **Balanced Training**: Addresses class imbalance (600 images per class)
@@ -39,7 +39,7 @@ This innovative approach offers:
 - **Real-time Classification**: Instant predictions with confidence scores
 - **Confidence Thresholding**: 50% threshold with "Unknown Object" fallback
 - **Comprehensive Documentation**: Full ML report with performance analysis
-- **Production Ready**: Optimized for deployment with <200ms inference time
+- **Production Ready**: Optimized for deployment with good inference time
 
 ## Dataset
 
@@ -52,7 +52,7 @@ The project uses the **TrashNet dataset**, which contains images of waste sorted
 - **Plastic** - Plastic bottles and packaging
 - **Trash** - Non-recyclable waste
 
-The dataset consists of 1,865 valid images (after removing 100 corrupted files) resized to 224×224 pixels for optimal EfficientNetB0 processing.
+The dataset consists of 1,865 valid images (after removing 100 corrupted files) resized to 300×300 pixels for optimal EfficientNetB3 processing.
 
 **Dataset Source**: [TrashNet on Kaggle](https://www.kaggle.com/datasets/feyzazkefe/trashnet)
 
@@ -96,12 +96,12 @@ Predicted Class
 ### Feature Extraction
 
 ```python
-from tensorflow.keras.applications import EfficientNetB0
+from tensorflow.keras.applications import EfficientNetB3
 from tensorflow.keras import Sequential
 from tensorflow.keras.layers import GlobalAveragePooling2D
 
-# Load pre-trained EfficientNetB0
-base_model = EfficientNetB0(
+# Load pre-trained EfficientNetB3
+base_model = EfficientNetB3(
     weights='imagenet', 
     include_top=False, 
     input_shape=(300, 300, 3)
@@ -115,7 +115,7 @@ model = Sequential([
 ])
 ```
 
-**Why EfficientNetB0?**
+**Why EfficientNetB3?**
 - State-of-the-art accuracy with minimal computational cost
 - Pretrained on ImageNet provides robust visual features (1,300-dimensional feature vectors)
 - Compact model suitable for deployment
@@ -419,7 +419,7 @@ The Streamlit application provides an intuitive, multi-modal interface for waste
 - **Camera Screenshots**: Capture and classify images directly from camera
 
 #### AI-Powered Classification
-- **Automatic Processing**: Features extracted via EfficientNetB0 (1,300-dimensional vectors)
+- **Automatic Processing**: Features extracted via EfficientNetB3 (1,300-dimensional vectors)
 - **SVM Classification**: Real-time predictions with 92.49% accuracy
 - **Confidence Scores**: Visual representation of prediction probabilities for all 6 categories
 - **Confidence Threshold**: 50% threshold with "Unknown Object" fallback for ambiguous predictions
@@ -447,7 +447,7 @@ The Streamlit application provides an intuitive, multi-modal interface for waste
 
 #### Option 1: Upload Image
 1. Click "Browse files" or drag-and-drop an image
-2. Image automatically processed through EfficientNetB0
+2. Image automatically processed through EfficientNetB3
 3. SVM classifier predicts the waste category
 4. View prediction with confidence scores
 
@@ -468,7 +468,7 @@ The Streamlit application provides an intuitive, multi-modal interface for waste
 
 ### Deep Learning
 - **TensorFlow/Keras 2.x** - Feature extraction framework
-- **EfficientNetB0** - Pre-trained CNN for feature extraction (ImageNet weights, 1,300-dim features)
+- **EfficientNetB3** - Pre-trained CNN for feature extraction (ImageNet weights, 1,300-dim features)
 
 ### Machine Learning
 - **scikit-learn** - SVM and KNN classifiers with hyperparameter optimization
