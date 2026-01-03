@@ -1,7 +1,7 @@
 Application Link: [ML Application](https://trashnet-classifier-desjhwxrzwf9eueucgqwtp.streamlit.app/)
 
 
-# TrashNet Classifier 🗑️♻️
+# [TrashNet Classifier](https://trashnet-classifier-desjhwxrzwf9eueucgqwtp.streamlit.app/) 🗑️♻️
 
 A hybrid deep learning and machine learning waste classification system achieving **92.49% accuracy**. Combines EfficientNetB0 feature extraction with SVM classification to identify and categorize 6 types of waste materials. Includes an interactive Streamlit web app with camera support for real-time classification.
 
