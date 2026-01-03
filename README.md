@@ -438,10 +438,10 @@ The Streamlit application provides an intuitive, multi-modal interface for waste
 ### Screenshots
 
 #### Main Interface
-![Main Interface]<img width="1913" height="907" alt="TN-1" src="https://github.com/user-attachments/assets/1f48d588-96a0-4038-a7a7-10925c592577"/>
+<img width="1913" height="907" alt="TN-1" src="https://github.com/user-attachments/assets/1f48d588-96a0-4038-a7a7-10925c592577"/>
 
 #### Classification Results
-![Prediction Results]<img width="1917" height="900" alt="TN-2" src="https://github.com/user-attachments/assets/1ce713a7-98e7-45e6-a678-70e51c19c88d"/>)
+<img width="1917" height="900" alt="TN-2" src="https://github.com/user-attachments/assets/1ce713a7-98e7-45e6-a678-70e51c19c88d"/>
 ### Using the App
 
 #### Option 1: Upload Image
