@@ -63,7 +63,7 @@ The project uses the **TrashNet dataset**, which contains images of waste sorted
 The complete pipeline follows these stages:
 
 1. **Images** → Raw input images of waste items
-2. **Preprocessing and Augmentation** → Image resizing, normalization, and augmentation (4x multiplier)
+2. **Preprocessing and Augmentation** → Image resizing, normalization, and augmentation (2.4x multiplier)
 3. **CNN (EfficientNetB3)** → Feature extraction using pre-trained model
 4. **Classification** → Two classifiers tested:
    - **SVM** → Selected (92.5% accuracy) ✅
@@ -127,17 +127,17 @@ Custom augmentation pipeline designed specifically for waste classification to a
 
 ```python
 ImageDataGenerator(
-            rotation_range=20,           # Moderate rotation (trash can be at any angle)
-            width_shift_range=0.15,      # Slight horizontal shifts
-            height_shift_range=0.15,     # Slight vertical shifts
-            zoom_range=0.2,              # Zoom to simulate different distances
-            shear_range=0.15,            # Slight shearing
-            horizontal_flip=True,        # Trash items can appear mirrored
-            vertical_flip=False,         # Don't flip vertically (unnatural)
-            brightness_range=[0.8, 1.3], # Lighting variations
-            fill_mode='nearest',         # Fill missing pixels
-            channel_shift_range=0.1      # Color variations
-        )
+    rotation_range=40,           # Moderate rotation (trash can be at any angle)
+    width_shift_range=0.2,       # Horizontal shifts
+    height_shift_range=0.2,      # Vertical shifts
+    zoom_range=0.2,              # Zoom to simulate different distances
+    shear_range=0.2,             # Shearing transformations
+    horizontal_flip=True,        # Trash items can appear mirrored
+    vertical_flip=False,         # Don't flip vertically (unnatural)
+    brightness_range=[0.7, 1.3], # Wider lighting variations
+    fill_mode='nearest',         # Fill missing pixels
+    channel_shift_range=30.0     # Color channel variations
+)
 ```
 
 **Augmentation Results:**
@@ -279,12 +279,17 @@ knn_classifier.fit(train_features, y_train)
 from sklearn.metrics import classification_report, confusion_matrix
 
 # Evaluate SVM
-svm_predictions = svm.predict(val_features)
-print(classification_report(y_val, svm_predictions, target_names=classes))
+svm_test_pred = svm_classifier.predict(test_features)
+print(f"Test Accuracy: {accuracy_score(test_labels_final, svm_test_pred):.4f}")
+print("\nClassification Report:")
+print(classification_report(test_labels_final, svm_test_pred, target_names=label_encoder.classes_))
 
 # Evaluate KNN
-knn_predictions = knn.predict(val_features)
-print(classification_report(y_val, knn_predictions, target_names=classes))
+knn_test_pred = knn_classifier.predict(test_features)
+print(f"Test Accuracy: {accuracy_score(test_labels_final, knn_test_pred):.4f}")
+print("\nClassification Report:")
+print(classification_report(test_labels_final, knn_test_pred, target_names=label_encoder.classes_))
+
 ```
 
 ## Results
