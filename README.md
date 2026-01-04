@@ -52,8 +52,6 @@ The project uses the **TrashNet dataset**, which contains images of waste sorted
 - **Plastic** - Plastic bottles and packaging
 - **Trash** - Non-recyclable waste
 
-The dataset consists of 1,865 valid images (after removing 100 corrupted files) resized to 300×300 pixels for optimal EfficientNetB3 processing.
-
 **Dataset Source**: [TrashNet on Kaggle](https://www.kaggle.com/datasets/feyzazkefe/trashnet)
 
 ## Methodology
@@ -154,7 +152,7 @@ Two classifiers were trained and comprehensively compared:
 
 1. **Support Vector Machine (SVM)** ✅ **Selected for Production**
    - Kernel: RBF (Radial Basis Function)
-   - C parameter: 10 (regularization strength)
+   - C parameter: 7.7 (regularization strength)
    - Gamma: scale (automatic)
    - Class weight: balanced (handles class imbalance)
    - Probability estimates: enabled
@@ -179,7 +177,7 @@ Two classifiers were trained and comprehensively compared:
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/AhmedMohamedKame1/trashnet-classifier.git
+git clone https://github.com/GEMIv1/trashnet-classifier.git
 cd trashnet-classifier
 ```
 
@@ -268,12 +266,12 @@ from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 
 # Train SVM
-svm_classifier = SVC(kernel='rbf', C=10.0, gamma='scale', probability=True, class_weight='balanced', random_state=42)
-svm.fit(train_features, y_train)
+svm_classifier = SVC(kernel='rbf', C=7.7, gamma='scale', probability=True, class_weight='balanced', random_state=42)
+svm_classifier.fit(train_features, y_train)
 
 # Train KNN for comparison
 knn_classifier = KNeighborsClassifier(n_neighbors=7, weights='distance', algorithm='auto', metric='minkowski', p=2, n_jobs=-1)
-knn.fit(train_features, y_train)
+knn_classifier.fit(train_features, y_train)
 ```
 
 #### 4. Evaluation
